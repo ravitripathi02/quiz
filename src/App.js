@@ -8,7 +8,7 @@ export default function App() {
   const [ans, setAns] = useState(-1);
   const [correctAns, setCorrectAns] = useState(0);
   const initialRender = useRef(true); // Create a ref to track the initial render
-  //const [optionClasses, setOptionClasses] = useState(["", "", "", ""]);
+  const [optionClasses, setOptionClasses] = useState(["", "", "", ""]);
   // Load data from localStorage on component mount
   let optionClass = "";
   const getStarRating = (difficulty) => {
@@ -137,7 +137,7 @@ export default function App() {
     const savedNextQues = localStorage.getItem("nextQuestionIndex");
     const savedAns = localStorage.getItem("selectedAnswer");
     const savedCorrectAns = localStorage.getItem("correctAnswers");
-    console.log(localStorage.getItem("correctAnswers"));
+
     if (savedNextQues !== null) {
       setNextQues(parseInt(savedNextQues, 10));
     }
@@ -151,7 +151,6 @@ export default function App() {
     }
   }, []);
 
-  // Save data to localStorage on state change
   useEffect(
     () => {
       if (nextQues !== 0 && ans !== -1 && correctAns !== 0) {
@@ -162,31 +161,40 @@ export default function App() {
     },
     [nextQues, ans, correctAns, fans]
   );
+
   const playAgain = () => {
-    localStorage.setItem("nextQuestionIndex", 0);
-    localStorage.setItem("selectedAnswer", -1);
-    localStorage.setItem("correctAnswers", 0);
-    localStorage.setItem("correctAns", -1);
+    localStorage.removeItem("nextQuestionIndex");
+    localStorage.removeItem("selectedAnswer");
+    localStorage.removeItem("correctAnswers");
+
     setNextQues(0);
     setAns(-1);
-    setFans(-1);
+    setFans(0);
     setCorrectAns(0);
+    setOptionClasses(["", "", "", ""]);
   };
-  let ind = -1;
+
   const result = (index) => {
     if (ans === -1) {
       setAns(index);
       setFans(1);
 
-      ind = index;
-      console.log(ans);
       if (questions[nextQues].options[index] === questions[nextQues].answer) {
         setCorrectAns((prevCorrectAns) => prevCorrectAns + 1);
       }
-      optionClass =
-        questions[nextQues].options[index] === questions[nextQues].answer
-          ? "correct-answer"
-          : "wrong-answer";
+
+      const updatedOptionClasses = optionClasses.map((classVal, i) => {
+        if (i === index) {
+          return questions[nextQues].options[index] ===
+            questions[nextQues].answer
+            ? "correct-answer"
+            : "wrong-answer";
+        } else {
+          return classVal;
+        }
+      });
+
+      setOptionClasses(updatedOptionClasses);
     }
   };
 
@@ -194,10 +202,10 @@ export default function App() {
     setNextQues(nextQues + 1);
     setFans(0);
     setAns(-1);
+    setOptionClasses(["", "", "", ""]);
   };
 
   const progressPercentage = ((nextQues + 1) / questions.length) * 100;
-
   return (
     <div className="App">
       <h1>Quiz App</h1>
