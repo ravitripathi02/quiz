@@ -102,6 +102,9 @@
   color: white;
   background-color: #6dbd63;
 }
+.result{
+   font-size: 5em;
+}
 @media screen and (max-width: 585px) {
   .quiz{
     padding-left:10px;
@@ -124,4 +127,7 @@
     text-align: center;
     width: 300px;
 }
+  .result{
+     font-size: 3em;
+  }
 }
