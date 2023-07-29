@@ -109,7 +109,7 @@
   }
   .options{
     flex-direction: column;
-    align-items:cenete;
+    align-items:center;
     gap: 40px
   }
   .option-b, .option-t {
