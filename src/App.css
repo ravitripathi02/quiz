@@ -102,3 +102,9 @@
   color: white;
   background-color: #6dbd63;
 }
+@media screen and (max-width: 585px) {
+  .quiz{
+    padding-left:10px;
+    padding-right:10ox;
+  }
+}
