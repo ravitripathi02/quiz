@@ -299,7 +299,7 @@ export default function App() {
             )}
           </div>
         ) : (
-          <div style={{ color: "green", fontSize: "5em" }}>
+          <div className="result"style={{ color: "green" }}>
             <div>Quiz Completed!</div>
             <div>You have scored: {correctAns * 5}%</div>
           </div>
